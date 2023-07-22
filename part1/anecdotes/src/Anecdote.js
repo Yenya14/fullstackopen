@@ -6,4 +6,4 @@ const Anecdote = ({anecdote, votes}) => (
     </div>
 )
 
-export default Anecdote
+export default Anecdote;
