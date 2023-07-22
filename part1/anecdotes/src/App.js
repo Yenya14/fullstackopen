@@ -22,7 +22,7 @@ const App = () => {
     const copy = [...votes]
     copy[selected]++
     setVotes(copy)
-  }
+  };
 
   const mostVotes = votes.reduce((accIndex, currentVotes, currentIndex) =>
   currentVotes > votes[accIndex] ? currentIndex : accIndex, 0);
