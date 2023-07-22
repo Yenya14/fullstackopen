@@ -40,6 +40,6 @@ const App = () => {
       <Anecdote anecdote={anecdotes[mostVotes]} votes={votes[mostVotes]}/>
     </div>
   )
-}
+};
 
 export default App;
