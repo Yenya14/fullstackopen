@@ -1,8 +1,8 @@
 import Part from "./Part"
 
-const Content = ({parts}) => (
+const Content = (props) => (
     <div>
-        {parts.map((value) => 
+        {props.parts.map((value) => 
         (<Part key={value.id} part={value}/>)
         )}
  </div>
