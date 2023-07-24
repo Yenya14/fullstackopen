@@ -7,7 +7,6 @@ sequenceDiagram
     Note right of Browser: POST request
     Note left of Server: Add input to notes
     Server->>Browser: Send response to browser
-    Note left of Server: 382 status code response
     Note right of Browser: Reload
     Browser->>Server: Fetch main.css
     Note right of Browser: GET request
