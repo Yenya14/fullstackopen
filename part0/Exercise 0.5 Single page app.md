@@ -1,20 +1,22 @@
 ```mermaid
 sequenceDiagram
-Actor User
+    participant U as User
+    participant B as Browser
+    participant S as Server
 
-User->>Browser: Goes to spa page
-Browser->>Server: Fetch spa.html
-Note right of Browser: GET request
-Server->>Browser: Provide spa.html
-Browser->>Server: Fetch main.css
-Note right of Browser: GET request
-Server->>Browser: Provide main.css
-Browser->>Server: Fetch spa.js
-Note right of Browser: GET request
-Server->>Browser: Provide spa.js
-Browser->>User: Render HTML and CSS
-Browser->>Server: Fetch data.json
-Note right of Browser: AJAX request
-Server->>Browser: Provide data.json
-Browser->>User: Render notes as HTML list
+U->>B: Navigates to the SPA page
+B->>S: Requests spa.html
+Note right of B: Initiates a GET request
+S->>B: Provides spa.html
+B->>S: Requests main.css
+Note right of B: Initiates a GET request
+S->>B: Provides main.css
+B->>S: Requests spa.js
+Note right of B: Initiates a GET request
+S->>B: Provides spa.js
+B->>U: Renders the HTML and applies CSS
+B->>S: Requests data.json
+Note right of B: Initiates an AJAX request
+S->>B: Provides data.json
+B->>U: Render the notes as HTML list
 ```

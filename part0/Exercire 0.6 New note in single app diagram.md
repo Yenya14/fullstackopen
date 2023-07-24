@@ -1,14 +1,16 @@
 ```mermaid
 sequenceDiagram
-actor User
+    participant U as User
+    participant B as Browser
+    participant S as Server
 
-User->>Browser: Clicks submit button
-Browser->>Server: Send user input as JSON to server
-Note left of Browser: Add input to notes
-Browser->>User: Render new list of notes
-Browser->>Server: Send user input to server as JSON
-Note right of Browser: POST request
-Note left of Server: Save input to data
-Server->>Browser: Send response to browser
-Note left of Server: 201 status code response
+    U->>B: Clicks the submit button
+    B->>S: Sends user input to the server as JSON
+    Note left of B: Adds the input to notes
+    B->>U: Renders a new list of notes
+    B->>S: Sends user input to server as JSON
+    Note right of B: Initiates POST request
+    Note left of S: Saves the input to the data
+    S->>B: Senda a response to the browser
+    Note left of S: Returns 201 status code response
 ```
