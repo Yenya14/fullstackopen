@@ -2,7 +2,9 @@ import Part from "./Part"
 
 const Content = ({parts}) => (
     <div>
-        {parts.map((part) => (<Part key={part.id} part={part}/>))}
+        {parts.map((value) => 
+        (<Part key={value.id} part={value}/>)
+        )}
  </div>
 )
 export default Content;
