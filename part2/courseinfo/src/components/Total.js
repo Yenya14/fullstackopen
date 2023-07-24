@@ -1,11 +1,11 @@
 const Total = ({parts}) => {
     const exercisesArray = parts.map((part) => part.exercises); 
-    const totalExercises = exercisesArray.reduce((a, b) => a + b, 0);
+    const totalExercises = exercisesArray.reduce((total, exercises) => total + exercises, 0);
     return (
       <p>
-        <strong>
+        <b>
         total of {totalExercises} exercises
-        </strong>
+        </b>
       </p>
     );
   };
