@@ -21,12 +21,18 @@ useEffect(() => {
 
   const addNewPerson = (event) => {
     event.preventDefault()
+    
+    const newPerson = {name: newName, number: newNumber}
+
     let condition = persons.find(person => person.name === newName)
     if (condition){
-      alert(`${newName} is already added to phonebook`)
+      if (window.confirm(`${newName} is already added to phonebook, replace a old number with the new one?`)){
+        servicePerson.update(condition.id, newPerson).then((result) => {
+          setPersons(persons.map(person => (person.id !== condition.id ? person : result)))
+        })
+      }
     }
     else{
-  const newPerson = {name: newName, number: newNumber}
   servicePerson.create(newPerson)
   .then(personAdded => 
     setPersons(persons.concat(personAdded)))
