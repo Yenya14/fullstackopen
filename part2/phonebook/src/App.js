@@ -1,28 +1,23 @@
 import { useState, useEffect} from 'react'
-import axios from 'axios';
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
+import servicePerson from './services/servicePerson';
 
 const App = () => {
-  const [persons, setPersons] = useState(
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-  )
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filterQuery, setFilterQuery] = useState('')
 
-  useEffect(() => {
-    axios.get(' http://localhost:3001/persons')
-    .then(result => setPersons(result.data))
-  },
-[]
-  )
+useEffect(() => {
+  servicePerson.getAll().then((result) => setPersons(result))
+},[])
+   
 
   const handleChangedName =  setValue => event => setValue(event.target.value)
+  const handleChangedNumber = setValue => event => setValue(event.target.value);
+  
 
   const addNewPerson = (event) => {
     event.preventDefault()
@@ -32,10 +27,20 @@ const App = () => {
     }
     else{
   const newPerson = {name: newName, number: newNumber}
-  setPersons(persons.concat(newPerson))
-  }
+  servicePerson.create(newPerson)
+  .then(personAdded => 
+    setPersons(persons.concat(personAdded)))
+  
   setNewName("")
   setNewNumber('')
+}}
+
+const deletePerson =(id, name) => () => {
+  if(window.confirm(`Delete ${name}?`)){
+    servicePerson.remove(id).then(() =>{
+      setPersons(persons.filter(person => person.name !== name))
+    })
+  }
 }
 
 
@@ -45,9 +50,15 @@ const App = () => {
       <Filter query={filterQuery} handleChangedName={handleChangedName(setFilterQuery)}/>
       <h3>add a new</h3>
       <PersonForm handleChangedName={handleChangedName(setNewName)} 
-      handleChangedNumber={handleChangedName(setNewNumber)} name={newName} number={newNumber} handleNewPerson={addNewPerson}/>
+      handleChangedNumber={handleChangedNumber(setNewNumber)} 
+      name={newName} 
+      number={newNumber} 
+      handleNewPerson={addNewPerson} 
+      />
       <h3>Numbers</h3>
-      <Persons persons={persons} filterQuery={filterQuery}/>
+      <Persons persons={persons} filterQuery={filterQuery}
+            deletePerson={deletePerson}
+            />
     </div>
   )
 }
