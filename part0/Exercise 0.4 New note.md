@@ -1,25 +1,64 @@
+The sequence diagram depicts the chain of events that occur when the page https://studies.cs.helsinki.fi/exampleapp/notes is opened.
+
 ```mermaid
 sequenceDiagram
-    participant U as User
-    participant B as Browser
-    participant S as Server
+    participant browser
+    participant server
 
-    U->>B: Clicks the submit button
-    B->>S: Sends user input to the server
-    Note right of B: Initiates a POST request
-    Note left of S: Adds the input to notes
-    S->>B: Sends a response to the browser
-    Note left of S: Returns a 302 status code response
-    Note right of B: Reloads the page
-    B->>S: Fetches main.css
-    Note right of B: Initiates a GET request
-    S->>B: Provides main.css
-    B->>S: Fetches main.css
-    Note right of B: Initiates a GET request
-    S->>B: Provides main.js
-    B->>S: Fetches data.json
-    Note right of B: Initiates a GET request
-    S->>B: Provides updated data.json
-    B->>U: Renders the page
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate server
+    server-->>browser: HTML document
+    deactivate server
 
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server-->>browser: css file
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate server
+    server-->>browser: JavaScript file
+    deactivate server
+
+    Note right of browser: The browser starts executing the JavaScript code that fetches the JSON from the server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: [{ "content": "HTML is easy", "date": "2023-07-24" }, ... ]
+    deactivate server
+
+    Note right of browser: The browser executes the callback function that renders the notescopy
+```
+
+A sequence diagram depicting a user creating a new note on the page https://studies.cs.helsinki.fi/exampleappnotes by typing something into the text field and clicking the submit button.
+
+```mermaid
+sequenceDiagram
+    participant browser
+    participant server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate server 
+    Note left of server : redirects to: https://studies.cs.helsinki.fi/exampleapp/notes
+    server-->>browser: HTML document
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server-->>browser: css file
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate server
+    server-->>browser: JavaScript file
+    deactivate server
+
+    Note right of browser: The browser starts executing the JavaScript code that fetches the JSON from the server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: [{ "content": "HTML is easy", "date": "2023-07-24" }, ... ]
+    deactivate server
+
+    Note right of browser: The browser executes the callback function that renders the notescopy
 ```

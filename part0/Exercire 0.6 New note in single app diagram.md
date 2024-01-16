@@ -1,16 +1,14 @@
+The sequence diagram shows the situation in which the user creates a new note using the app's single-page version.
+
 ```mermaid
 sequenceDiagram
-    participant U as User
-    participant B as Browser
-    participant S as Server
+    participant browser
+    participant server
 
-    U->>B: Clicks the submit button
-    B->>S: Sends user input to the server as JSON
-    Note left of B: Adds the input to notes
-    B->>U: Renders a new list of notes
-    B->>S: Sends user input to server as JSON
-    Note right of B: Initiates POST request
-    Note left of S: Saves the input to the data
-    S->>B: Senda a response to the browser
-    Note left of S: Returns 201 status code response
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+    activate server
+    
+    Note right of browser: Sends user input to server as JSON. Initiates POST request
+
+    server->>browser: Sends reponse to the browser
 ```
